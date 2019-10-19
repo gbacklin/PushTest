@@ -57,7 +57,6 @@ public class Network: NSObject {
     }
     
     public func post(url: String, token: String, headers: [String : AnyObject]?, parameters: [String : AnyObject]?, completion:@escaping(AnyObject?, [AnyHashable : Any]?, Error?)->Void) {
-        weak var weakSelf = self
 
         do {
             var request = URLRequest(url: URL(string: url)!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
@@ -87,12 +86,12 @@ public class Network: NSObject {
 
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let jsonData = data {
-                    let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as! [String : AnyObject]
+                    let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : AnyObject]
                     if json != nil {
                         print("POST json: \(json!)")
                         if let responseReceived = response as? HTTPURLResponse, 200...299 ~= responseReceived.statusCode {
                             let headerFields = responseReceived.allHeaderFields
-                            print("POST headerFields: \(headerFields)")
+                            //print("POST headerFields: \(headerFields)")
                             completion(json as AnyObject?, headerFields, nil)
                         } else {
                             completion(json as AnyObject?, nil, error)
@@ -100,7 +99,7 @@ public class Network: NSObject {
                     } else {
                         if let responseReceived = response as? HTTPURLResponse, 200...299 ~= responseReceived.statusCode {
                             let headerFields = responseReceived.allHeaderFields
-                            print("POST headerFields: \(headerFields)")
+                            //print("POST headerFields: \(headerFields)")
                             completion(responseReceived as AnyObject?, headerFields, nil)
                         } else {
                             print("POST response: \(String(describing: response))")
@@ -115,8 +114,6 @@ public class Network: NSObject {
             }
             
             task.resume()
-        } catch {
-            completion(nil, nil, error)
         }
         
     }

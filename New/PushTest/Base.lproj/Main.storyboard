@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ia3-EI-Ckd">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PushTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-jH-aZz">
+                                <rect key="frame" x="82" y="221" width="250" height="454"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="56" translatesAutoresizingMaskIntoConstraints="NO" id="guh-uS-H3V">
+                                        <rect key="frame" x="49" y="0.0" width="152" height="162"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WFR-YD-KjA" customClass="BadgeImageView" customModule="PushTest" customModuleProvider="target">
+                                                <rect key="frame" x="40" y="0.0" width="72" height="72"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="72" id="e2L-dn-Lry"/>
+                                                    <constraint firstAttribute="height" constant="72" id="lQF-MN-L2W"/>
+                                                </constraints>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5tO-J9-z54">
+                                                <rect key="frame" x="0.0" y="128" width="152" height="34"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GIK-xJ-ELm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="34"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="34" id="BAp-rc-pch"/>
+                                                            <constraint firstAttribute="width" constant="50" id="UZW-E0-0lQ"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="0sb-kq-P7M"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="99" translatesAutoresizingMaskIntoConstraints="NO" id="hz8-zd-y70">
+                                                        <rect key="frame" x="58" y="0.0" width="94" height="34"/>
+                                                        <connections>
+                                                            <action selector="updateBadgeCount:" destination="BYZ-38-t0r" eventType="valueChanged" id="aBf-w9-ySJ"/>
+                                                        </connections>
+                                                    </stepper>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9v0-sV-Sg2">
+                                        <rect key="frame" x="0.0" y="204" width="250" height="250"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="FV9-WI-5Ga"/>
+                                            <constraint firstAttribute="height" constant="250" id="d89-lz-Z6m"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="o2o-jH-aZz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="905-Tx-ulW"/>
+                            <constraint firstItem="o2o-jH-aZz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="jZn-a4-nd0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4us-9A-YuO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="FyC-Pv-fqs">
+                            <connections>
+                                <action selector="sendTextToServer:" destination="BYZ-38-t0r" id="7qH-YN-kPP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="badgeNumberStepper" destination="hz8-zd-y70" id="2zR-jo-FPG"/>
+                        <outlet property="entryTextField" destination="GIK-xJ-ELm" id="ga8-fd-gSU"/>
+                        <outlet property="imageView" destination="WFR-YD-KjA" id="0d6-5E-UJZ"/>
+                        <outlet property="textView" destination="9v0-sV-Sg2" id="dbE-0R-EqN"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="119.86607142857142"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ERZ-iS-eKy">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ia3-EI-Ckd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6h3-rM-EhI">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="LaD-eB-nGa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F9D-Hh-Tha" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="119.86607142857142"/>
+        </scene>
+    </scenes>
+</document>

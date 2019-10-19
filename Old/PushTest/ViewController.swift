@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 
     @IBAction func send(_ sender: Any) {
         if let text = inputTextField.text {
-            if text.characters.count > 0 {
+            if text.count > 0 {
                 if let deviceToken: String = ((UIApplication.shared.delegate) as! AppDelegate).token {
                     
                     let message = inputTextField.text
