@@ -21,9 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var token: String?
     static var badgeNumber = 0
+    
+    // MARK: - Application Lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        debugPrint("didFinishLaunchingWithOptions")
         // Override point for customization after application launch.
         requestNotificationAuthorization(application)
         return true
@@ -51,7 +52,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    // MARK: - Utility
+    
+    func updateBadgeCount(_ data: Data) {
+        do {
+            let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
+            let aps:[String: AnyObject] = dict!["aps"] as! [String : AnyObject]
+            if let count: Int = aps["badge"] as? Int {
+                DispatchQueue.main.async { [weak self] in
+                    self!.updateBadgeNumber(count)
+                    NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: aps, userInfo: nil)
+                }
+            } else if let type: String = aps["type"] as? String {
+                if type == "open-issue-count" {
+                    if let count: Int = aps["count"] as? Int {
+                        DispatchQueue.main.async { [weak self] in
+                            self!.updateBadgeNumber(count)
+                            NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: aps, userInfo: nil)
+                        }
+                    }
+                }
+            }
+        } catch {
+            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateBadgeNumber(_ number: Int) {
+        AppDelegate.badgeNumber = number
+        UIApplication.shared.applicationIconBadgeNumber = number
+    }
+    
 }
 
 // MARK: - Push Notifications
@@ -59,8 +90,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     func requestNotificationAuthorization(_ application: UIApplication) {
         let center = UNUserNotificationCenter.current()
-        center.delegate = self
         
+        center.delegate = self
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             // Enable or disable features based on authorization.
             if granted {
@@ -123,36 +154,13 @@ extension AppDelegate {
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], withResponseInfo responseInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
         debugPrint("handleActionWithIdentifier responseInfo: \(responseInfo)")
     }
-    func updateBadgeNumber(_ number: Int) {
-        AppDelegate.badgeNumber = number
-        UIApplication.shared.applicationIconBadgeNumber = number
-    }
+
 }
 
 // MARK: - UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        debugPrint("didReceive response: \(response)")
-//
-//        do {
-//            let data = try JSONSerialization.data(withJSONObject: response.notification.request.content.userInfo, options: [])
-//            let str = String(decoding: data, as: UTF8.self)
-//            do {
-//                //let model: BadgeNumberPushNotificationModel = try JSONDecoder().decode(BadgeNumberPushNotificationModel.self, from: data)
-//                //updateBadgeNumber(model.badgeNumber)
-//                NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: str, userInfo: nil)
-//                debugPrint("Push Notificateion response received - badgeNumber: \(str)")
-//            } catch {
-//                debugPrint("Push Notificateion error received: \(error.localizedDescription)")
-//            }
-//        } catch {
-//            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
-//        }
-//
-//    }
-
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         debugPrint("didReceive response: \(response)")
         
@@ -163,7 +171,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let data = try JSONSerialization.data(withJSONObject: userInfo, options: [])
             updateBadgeCount(data)
         } catch {
-            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
+            debugPrint("JSONSerialization error received: \(error.localizedDescription) categoryIdentifier: \(categoryIdentifier)")
         }
 
         // Response has actionIdentifier, userText, Notification (which has Request, which has Trigger and Content)
@@ -172,7 +180,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             print("response.actionIdentifier: \(response.actionIdentifier)")
             break
         }
-        UIApplication.shared.applicationIconBadgeNumber = 10
 
         completionHandler()
     }
@@ -194,30 +201,25 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
         debugPrint("openSettingsFor notification")
     }
-    
-    
-    func updateBadgeCount(_ data: Data) {
-        do {
-            let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
-            let aps:[String: AnyObject] = dict!["aps"] as! [String : AnyObject]
-            if let count: Int = aps["badge"] as? Int {
-                DispatchQueue.main.async { [weak self] in
-                    self!.updateBadgeNumber(count)
-                    NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: aps, userInfo: nil)
-                }
-            } else if let type: String = aps["type"] as? String {
-                if type == "open-issue-count" {
-                    if let count: Int = aps["count"] as? Int {
-                        DispatchQueue.main.async { [weak self] in
-                            self!.updateBadgeNumber(count)
-                            NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: aps, userInfo: nil)
-                        }
-                    }
-                }
-            }
-            
-        } catch {
-            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
-        }
-    }
+
 }
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//        debugPrint("didReceive response: \(response)")
+//
+//        do {
+//            let data = try JSONSerialization.data(withJSONObject: response.notification.request.content.userInfo, options: [])
+//            let str = String(decoding: data, as: UTF8.self)
+//            do {
+//                //let model: BadgeNumberPushNotificationModel = try JSONDecoder().decode(BadgeNumberPushNotificationModel.self, from: data)
+//                //updateBadgeNumber(model.badgeNumber)
+//                NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: str, userInfo: nil)
+//                debugPrint("Push Notificateion response received - badgeNumber: \(str)")
+//            } catch {
+//                debugPrint("Push Notificateion error received: \(error.localizedDescription)")
+//            }
+//        } catch {
+//            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
+//        }
+//
+//    }
+

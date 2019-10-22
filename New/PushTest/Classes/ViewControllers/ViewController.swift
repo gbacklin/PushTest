@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         return Bundle.main.object(forInfoDictionaryKey: "Passphrase") as? String
     }
 
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -27,6 +29,8 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(type(of:self).appEnteredForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         syncBadgeNumber(UIApplication.shared.applicationIconBadgeNumber)
     }
+    
+    // MARK: - @IBAction
     
     @IBAction func updateBadgeCount(_ sender: UIStepper) {
         UIApplication.shared.applicationIconBadgeNumber = Int(sender.value)
@@ -65,6 +69,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - Utility
     
     func updateImage(number: Int) {
         if number < 1 {
@@ -88,6 +93,8 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - Notification
+    
     @objc func didReceivePushNotificationUpdate(_ notification: Notification) {
         if let response = notification.object as? [String : AnyObject] {
             textView.text = "\(response)"
@@ -99,13 +106,4 @@ class ViewController: UIViewController {
         syncBadgeNumber(UIApplication.shared.applicationIconBadgeNumber)
     }
 
-
 }
-
-/*
-
- payload = {
-             "type" : "open-issue-count",
-             "count": 12
-         }
- */
