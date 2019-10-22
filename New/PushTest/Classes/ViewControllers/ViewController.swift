@@ -81,9 +81,11 @@ class ViewController: UIViewController {
     }
 
     func syncBadgeNumber(_ num: Int) {
-        updateImage(number: num)
-        entryTextField.text = "\(num)"
-        badgeNumberStepper.value = Double(num)
+        DispatchQueue.main.async { [weak self] in
+            self!.updateImage(number: num)
+            self!.entryTextField.text = "\(num)"
+            self!.badgeNumberStepper.value = Double(num)
+        }
     }
     
     @objc func didReceivePushNotificationUpdate(_ notification: Notification) {
