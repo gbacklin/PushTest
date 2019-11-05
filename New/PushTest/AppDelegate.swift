@@ -11,10 +11,6 @@
 import UIKit
 import UserNotifications
 
-struct Notifications {
-    static let PushNotificationPayloadReceived = NSNotification.Name(rawValue: "PushNotificationPayloadReceived")
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -51,8 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+}
 
-    // MARK: - Utility
+// MARK: - Push Notification - Badge count
+
+extension AppDelegate {
     
     func updateBadgeCount(_ data: Data) {
         do {
@@ -82,67 +82,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.badgeNumber = number
         UIApplication.shared.applicationIconBadgeNumber = number
     }
-    
-}
 
-// MARK: - Push Notifications
-
-extension AppDelegate {
-    func requestNotificationAuthorization(_ application: UIApplication) {
-        let center = UNUserNotificationCenter.current()
-        
-        center.delegate = self
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            // Enable or disable features based on authorization.
-            if granted {
-                center.getNotificationSettings { settings in
-                    guard settings.authorizationStatus == .authorized else { return }
-                    
-                    if settings.alertSetting == .enabled {
-                        debugPrint("Schedule an alert-only notification")
-                    } else if settings.badgeSetting == .enabled {
-                        debugPrint("Schedule an badge notification")
-                    } else if settings.soundSetting == .enabled {
-                        debugPrint("Schedule an sound notification")
-                    } else {
-                        debugPrint("Schedule an unknown notification")
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    debugPrint("Registering for Remote Notifications...")
-                    application.registerForRemoteNotifications()
-                    application.applicationIconBadgeNumber = AppDelegate.badgeNumber
-                }
-            } else {
-                debugPrint("In order to use this application, turn on notification permissions.")
-            }
-        }
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenParts = deviceToken.map { data -> String in
-            return String(format: "%02.2hhx", data)
-        }
-        token = tokenParts.joined()
-        NSLog("Device Token: \(String(describing: token!))")
-    }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        guard let aps = userInfo["aps"] as? [String: AnyObject] else {
-            completionHandler(.failed)
-            return
-        }
-        
-        debugPrint("didReceiveRemoteNotification aps: \(aps)")
-        if aps["content-available"] as? Int == 1 {
-            let type: String = aps["type"] as! String
-            let badgeCount: Int = aps["count"] as! Int
+    func didReceiveRemoteNotification(apsInfo: [String : AnyObject], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if apsInfo["content-available"] as? Int == 1 {
+            let type: String = apsInfo["type"] as! String
+            let badgeCount: Int = apsInfo["count"] as! Int
             debugPrint("content-available type: \(type) - badgeCount: \(badgeCount)")
             if type == "open-issue-count" {
                 DispatchQueue.main.async { [weak self] in
                     self!.updateBadgeNumber(badgeCount)
-                    NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: aps, userInfo: nil)
+                    NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: apsInfo, userInfo: nil)
                 }
             }
             completionHandler(.newData)
@@ -151,19 +100,7 @@ extension AppDelegate {
         }
     }
     
-    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], withResponseInfo responseInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
-        debugPrint("handleActionWithIdentifier responseInfo: \(responseInfo)")
-    }
-
-}
-
-// MARK: - UNUserNotificationCenterDelegate
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        debugPrint("didReceive response: \(response)")
-        
+    func handleResponse(response: UNNotificationResponse) {
         let userInfo = response.notification.request.content.userInfo
         let categoryIdentifier = response.notification.request.content.categoryIdentifier
 
@@ -180,46 +117,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             print("response.actionIdentifier: \(response.actionIdentifier)")
             break
         }
-
-        completionHandler()
     }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        debugPrint("willPresent notification: \(notification)")
-
-        // Update the app interface directly.
-        do {
-            let data = try JSONSerialization.data(withJSONObject: notification.request.content.userInfo, options: [])
-            updateBadgeCount(data)
-        } catch {
-            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
-        }
-        // Play a sound.
-        completionHandler(UNNotificationPresentationOptions.sound)
-    }
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
-        debugPrint("openSettingsFor notification")
-    }
-
 }
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        debugPrint("didReceive response: \(response)")
-//
-//        do {
-//            let data = try JSONSerialization.data(withJSONObject: response.notification.request.content.userInfo, options: [])
-//            let str = String(decoding: data, as: UTF8.self)
-//            do {
-//                //let model: BadgeNumberPushNotificationModel = try JSONDecoder().decode(BadgeNumberPushNotificationModel.self, from: data)
-//                //updateBadgeNumber(model.badgeNumber)
-//                NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: str, userInfo: nil)
-//                debugPrint("Push Notificateion response received - badgeNumber: \(str)")
-//            } catch {
-//                debugPrint("Push Notificateion error received: \(error.localizedDescription)")
-//            }
-//        } catch {
-//            debugPrint("JSONSerialization error received: \(error.localizedDescription)")
-//        }
-//
-//    }
-

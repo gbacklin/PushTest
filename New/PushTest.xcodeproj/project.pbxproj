@@ -11,6 +11,7 @@
 		4E0A02F1235A117E0013B763 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0A02EB235A117E0013B763 /* ViewController.swift */; };
 		4E0A02F2235A117E0013B763 /* BadgeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0A02ED235A117E0013B763 /* BadgeImageView.swift */; };
 		4E0A02F3235A117E0013B763 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0A02EF235A117E0013B763 /* Network.swift */; };
+		4EA269C02371C7B00082B8D1 /* AppDelegate+PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA269BF2371C7B00082B8D1 /* AppDelegate+PushNotification.swift */; };
 		4EC008BE2358F5A100165F19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC008BD2358F5A100165F19 /* AppDelegate.swift */; };
 		4EC008C32358F5A100165F19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C12358F5A100165F19 /* Main.storyboard */; };
 		4EC008C52358F5A400165F19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C42358F5A400165F19 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 		4E0A02EB235A117E0013B763 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4E0A02ED235A117E0013B763 /* BadgeImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeImageView.swift; sourceTree = "<group>"; };
 		4E0A02EF235A117E0013B763 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		4EA269BF2371C7B00082B8D1 /* AppDelegate+PushNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AppDelegate+PushNotification.swift"; path = "Classes/Extensions/AppDelegate+PushNotification.swift"; sourceTree = "<group>"; };
 		4EC008BA2358F5A100165F19 /* PushTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PushTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EC008BD2358F5A100165F19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EC008C22358F5A100165F19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				4EC008CF2358FF0E00165F19 /* PushTest.entitlements */,
 				4EC008BD2358F5A100165F19 /* AppDelegate.swift */,
+				4EA269BF2371C7B00082B8D1 /* AppDelegate+PushNotification.swift */,
 				4E0A02E7235A117E0013B763 /* Classes */,
 				4EC008C12358F5A100165F19 /* Main.storyboard */,
 				4EC008C42358F5A400165F19 /* Assets.xcassets */,
@@ -214,6 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E0A02F1235A117E0013B763 /* ViewController.swift in Sources */,
+				4EA269C02371C7B00082B8D1 /* AppDelegate+PushNotification.swift in Sources */,
 				4E0A02F3235A117E0013B763 /* Network.swift in Sources */,
 				4E0A02F0235A117E0013B763 /* BadgeNumberPushNotificationModel.swift in Sources */,
 				4E0A02F2235A117E0013B763 /* BadgeImageView.swift in Sources */,
