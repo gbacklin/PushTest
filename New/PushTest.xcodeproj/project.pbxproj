@@ -16,6 +16,7 @@
 		4EC008C32358F5A100165F19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C12358F5A100165F19 /* Main.storyboard */; };
 		4EC008C52358F5A400165F19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C42358F5A400165F19 /* Assets.xcassets */; };
 		4EC008C82358F5A400165F19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C62358F5A400165F19 /* LaunchScreen.storyboard */; };
+		4ED178CA23F31E4F00B7C43B /* AppDelegate+PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED178C923F31E4F00B7C43B /* AppDelegate+PushNotificationHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		4EC008C72358F5A400165F19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4EC008C92358F5A400165F19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EC008CF2358FF0E00165F19 /* PushTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushTest.entitlements; sourceTree = "<group>"; };
+		4ED178C923F31E4F00B7C43B /* AppDelegate+PushNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+PushNotificationHandler.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				4EC008CF2358FF0E00165F19 /* PushTest.entitlements */,
 				4EC008BD2358F5A100165F19 /* AppDelegate.swift */,
 				4EA269BF2371C7B00082B8D1 /* AppDelegate+PushNotification.swift */,
+				4ED178C923F31E4F00B7C43B /* AppDelegate+PushNotificationHandler.swift */,
 				4E0A02E7235A117E0013B763 /* Classes */,
 				4EC008C12358F5A100165F19 /* Main.storyboard */,
 				4EC008C42358F5A400165F19 /* Assets.xcassets */,
@@ -219,6 +222,7 @@
 				4E0A02F1235A117E0013B763 /* ViewController.swift in Sources */,
 				4EA269C02371C7B00082B8D1 /* AppDelegate+PushNotification.swift in Sources */,
 				4E0A02F3235A117E0013B763 /* Network.swift in Sources */,
+				4ED178CA23F31E4F00B7C43B /* AppDelegate+PushNotificationHandler.swift in Sources */,
 				4E0A02F0235A117E0013B763 /* BadgeNumberPushNotificationModel.swift in Sources */,
 				4E0A02F2235A117E0013B763 /* BadgeImageView.swift in Sources */,
 				4EC008BE2358F5A100165F19 /* AppDelegate.swift in Sources */,

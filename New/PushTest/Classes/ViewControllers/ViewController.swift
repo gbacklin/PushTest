@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var badgeCountTextField: UITextField!
     @IBOutlet var entryTextField: UITextField!
     @IBOutlet var textView: UITextView!
     @IBOutlet var imageView: BadgeImageView!
@@ -41,7 +42,7 @@ class ViewController: UIViewController {
     @IBAction func sendTextToServer(_ sender: Any) {
         textView.text = ""
 
-        if let text = entryTextField.text {
+        if let text = badgeCountTextField.text {
             if text.count > 0 {
                 if let deviceToken: String = appDelegate.token {
                     
@@ -93,12 +94,27 @@ class ViewController: UIViewController {
         }
     }
     
+    func updateBadgeNumber(_ num: Int) {
+        DispatchQueue.main.async { [weak self] in
+            if let previousNumber: Int = Int(self!.entryTextField.text!) {
+                self!.updateImage(number: previousNumber + num)
+                self!.entryTextField.text = "\(previousNumber + num)"
+                self!.badgeNumberStepper.value = Double(num)
+            } else {
+                self!.updateImage(number: num)
+                self!.entryTextField.text = "\(num)"
+                self!.badgeNumberStepper.value = Double(num)
+            }
+        }
+    }
+    
     // MARK: - Notification
     
     @objc func didReceivePushNotificationUpdate(_ notification: Notification) {
         if let response = notification.object as? [String : AnyObject] {
             textView.text = "\(response)"
-            syncBadgeNumber(response["count"] as! Int)
+            let count: String = response["count"] as! String
+            updateBadgeNumber(Int(count)!)
         }
     }
 

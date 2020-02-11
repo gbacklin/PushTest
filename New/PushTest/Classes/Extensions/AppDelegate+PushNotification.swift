@@ -18,11 +18,11 @@ extension AppDelegate {
     
     // MARK: - APNS Utility
     
-    func requestNotificationAuthorization(_ application: UIApplication) {
+    func requestNotificationAuthorization(_ application: UIApplication, options: UNAuthorizationOptions = [.alert, .sound, .badge]) {
         let center = UNUserNotificationCenter.current()
         
         center.delegate = self
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        center.requestAuthorization(options: options) { granted, error in
             // Enable or disable features based on authorization.
             if granted {
                 center.getNotificationSettings { settings in
