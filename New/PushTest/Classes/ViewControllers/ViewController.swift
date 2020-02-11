@@ -40,12 +40,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func sendTextToServer(_ sender: Any) {
+        DispatchQueue.global(qos: .background).async {
+            print("This is run on the background queue")
+            DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 3.0), execute: {
+                debugPrint("Dispatching...")
+                self.sendMessage()
+            })
+        }
+    }
+    
+    func sendMessage() {
         textView.text = ""
 
         if let text = badgeCountTextField.text {
             if text.count > 0 {
                 if let deviceToken: String = appDelegate.token {
-                    
                     let message = entryTextField.text
                     
                     //var headers: [String : AnyObject] = [String : AnyObject]()
