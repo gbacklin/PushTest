@@ -23,8 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FirebaseApp.configure()
-        Messaging.messaging().delegate = self
+        initializeFirebaseMessaging()
         requestNotificationAuthorization(application)
         return true
     }
@@ -53,14 +52,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        debugPrint("Firebase registration token: \(fcmToken)")
-        let dataDict: [String: String] = ["token": fcmToken]
-        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
-    }
-    
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        debugPrint("Firebase didReceive remoteMessage: \(remoteMessage.appData)")
-    }
-}
