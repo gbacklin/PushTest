@@ -35,7 +35,36 @@ extension AppDelegate {
                 // key being count and value a value
                 DispatchQueue.main.async { [weak self] in
                     self!.updateBadgeNumber(Int(count)!)
+                    if let redirect: String = dict!["redirect"] as? String {
+                        // This is as a result from Firebase notifications with the
+                        // key being count and value a value
+                        debugPrint("redirect: \(redirect)")
+                        DispatchQueue.main.async { [weak self] in
+                            self?.window = UIWindow(frame: UIScreen.main.bounds)
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if let controller: APNSViewController = storyboard.instantiateViewController(withIdentifier: "APNSViewController") as? APNSViewController {
+                                controller.dict = dict
+                                self?.window?.rootViewController = controller
+                                self?.window?.makeKeyAndVisible()
+                                NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
+                            }
+                        }
+                    }
                     NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
+                }
+            } else if let redirect: String = dict!["redirect"] as? String {
+                // This is as a result from Firebase notifications with the
+                // key being count and value a value
+                debugPrint("redirect: \(redirect)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.window = UIWindow(frame: UIScreen.main.bounds)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    if let controller: APNSViewController = storyboard.instantiateViewController(withIdentifier: "APNSViewController") as? APNSViewController {
+                        controller.dict = dict
+                        self?.window?.rootViewController = controller
+                        self?.window?.makeKeyAndVisible()
+                        NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
+                    }
                 }
             }
         } catch {

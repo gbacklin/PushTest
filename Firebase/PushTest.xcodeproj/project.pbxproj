@@ -34,6 +34,7 @@
 		4EC008C32358F5A100165F19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C12358F5A100165F19 /* Main.storyboard */; };
 		4EC008C52358F5A400165F19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C42358F5A400165F19 /* Assets.xcassets */; };
 		4EC008C82358F5A400165F19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C62358F5A400165F19 /* LaunchScreen.storyboard */; };
+		4EFEA0DB23FD86C10043C0AB /* APNSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFEA0DA23FD86C10043C0AB /* APNSViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		4EC008C72358F5A400165F19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4EC008C92358F5A400165F19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EC008CF2358FF0E00165F19 /* PushTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushTest.entitlements; sourceTree = "<group>"; };
+		4EFEA0DA23FD86C10043C0AB /* APNSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APNSViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				4E0A02EB235A117E0013B763 /* ViewController.swift */,
+				4EFEA0DA23FD86C10043C0AB /* APNSViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				4E047F1923FB3954002ACDA3 /* AppDelegate+FirebaseMessaging.swift in Sources */,
 				4E0A02F2235A117E0013B763 /* BadgeImageView.swift in Sources */,
 				4E047F1823FB3954002ACDA3 /* AppDelegate+PushNotification.swift in Sources */,
+				4EFEA0DB23FD86C10043C0AB /* APNSViewController.swift in Sources */,
 				4EC008BE2358F5A100165F19 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
