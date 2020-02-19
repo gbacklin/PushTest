@@ -8,10 +8,10 @@
 
 import UIKit
 
-// MARK: - Push Notification - Badge count
-
 extension AppDelegate {
     
+    // MARK: - Push Notification - Badge count handlers
+
     func updateBadgeCount(_ data: Data) {
         do {
             let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
@@ -33,44 +33,29 @@ extension AppDelegate {
             } else if let count: String = dict!["count"] as? String {
                 // This is as a result from Firebase notifications with the
                 // key being count and value a value
-                DispatchQueue.main.async { [weak self] in
-                    if let redirect: String = dict!["redirect"] as? String {
-                        // This is as a result from Firebase notifications with the
-                        // key being count and value a value
-                        debugPrint("redirect: \(redirect)")
-                        DispatchQueue.main.async { [weak self] in
-                            self?.window = UIWindow(frame: UIScreen.main.bounds)
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            if let controller: APNSViewController = storyboard.instantiateViewController(withIdentifier: "APNSViewController") as? APNSViewController {
-                                let navigationController: UINavigationController = storyboard.instantiateViewController(withIdentifier: "APNSNavigationController") as! UINavigationController
-                                controller.dict = dict
-                                navigationController.viewControllers = [controller]
-                                self?.window?.rootViewController = navigationController
-                                self?.window?.makeKeyAndVisible()
-                                NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
-                            }
-                        }
-                    } else {
-                        self!.updateBadgeNumber(Int(count)!)
-                        NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
-                    }
+                if let redirect: String = dict!["redirect"] as? String {
+                    // This is as a result from Firebase notifications with the
+                    // key being count and value a value
+                    debugPrint("redirect: \(redirect)")
+                    let updatedBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + Int(count)!
+                    updateBadgeNumber(Int(updatedBadgeNumber))
+                    redirectToNewViewController(dict: dict!)
+                } else {
+                    let updatedBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + Int(count)!
+                    updateBadgeNumber(Int(updatedBadgeNumber))
+                    NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
                 }
             } else if let redirect: String = dict!["redirect"] as? String {
                 // This is as a result from Firebase notifications with the
                 // key being count and value a value
                 debugPrint("redirect: \(redirect)")
-                DispatchQueue.main.async { [weak self] in
-                    self?.window = UIWindow(frame: UIScreen.main.bounds)
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    if let controller: APNSViewController = storyboard.instantiateViewController(withIdentifier: "APNSViewController") as? APNSViewController {
-                        let navigationController: UINavigationController = storyboard.instantiateViewController(withIdentifier: "APNSNavigationController") as! UINavigationController
-                        controller.dict = dict
-                        navigationController.viewControllers = [controller]
-                        self?.window?.rootViewController = navigationController
-                        self?.window?.makeKeyAndVisible()
-                        NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
-                    }
+                var updatedBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                if let count: String = dict!["count"] as? String {
+                    updatedBadgeNumber += Int(count)!
+                    updateBadgeNumber(Int(updatedBadgeNumber))
                 }
+                updateBadgeNumber(Int(updatedBadgeNumber))
+                redirectToNewViewController(dict: dict!)
             }
         } catch {
             debugPrint("JSONSerialization error received: \(error.localizedDescription)")
@@ -81,7 +66,24 @@ extension AppDelegate {
         AppDelegate.badgeNumber = number
         UIApplication.shared.applicationIconBadgeNumber = number
     }
+    
+    func redirectToNewViewController(dict: [String: AnyObject]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let controller: APNSViewController = storyboard.instantiateViewController(withIdentifier: "APNSViewController") as? APNSViewController {
+                let navigationController: UINavigationController = storyboard.instantiateViewController(withIdentifier: "APNSNavigationController") as! UINavigationController
+                controller.dict = dict
+                navigationController.viewControllers = [controller]
+                self?.window?.rootViewController = navigationController
+                self?.window?.makeKeyAndVisible()
+                NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict, userInfo: nil)
+            }
+        }
+    }
 
+    // MARK: - Push Notification handlers
+    
     func didReceiveRemoteNotification(userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         guard let apsInfo = userInfo["aps"] as? [String: AnyObject] else {
             completionHandler(.failed)

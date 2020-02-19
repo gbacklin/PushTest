@@ -104,18 +104,14 @@ class ViewController: UIViewController {
     }
     
     func updateBadgeNumber(_ num: Int) {
-        DispatchQueue.main.async { [weak self] in
-            if self != nil {
-                if let previousNumber: Int = Int(self!.entryTextField.text!) {
-                    self!.updateImage(number: previousNumber + num)
-                    self!.entryTextField.text = "\(previousNumber + num)"
-                    self!.badgeNumberStepper.value = Double(num)
-                } else {
-                    self!.updateImage(number: num)
-                    self!.entryTextField.text = "\(num)"
-                    self!.badgeNumberStepper.value = Double(num)
-                }
-            }
+        if let previousNumber: Int = Int(self.entryTextField.text!) {
+            updateImage(number: previousNumber + num)
+            entryTextField.text = "\(previousNumber + num)"
+            badgeNumberStepper.value = Double(num)
+        } else {
+            updateImage(number: num)
+            entryTextField.text = "\(num)"
+            badgeNumberStepper.value = Double(num)
         }
     }
     
