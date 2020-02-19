@@ -45,6 +45,9 @@ extension AppDelegate {
                     application.applicationIconBadgeNumber = AppDelegate.badgeNumber
                 }
             } else {
+                let alert = UIAlertController(title: "Request Authorization", message:"In order to use this application, turn on notification permissions.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
                 debugPrint("In order to use this application, turn on notification permissions.")
             }
         }
