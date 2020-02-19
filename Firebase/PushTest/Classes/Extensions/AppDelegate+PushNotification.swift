@@ -31,12 +31,12 @@ extension AppDelegate {
                     
                     if settings.alertSetting == .enabled {
                         debugPrint("Schedule an alert-only notification")
-                    } else if settings.badgeSetting == .enabled {
+                    }
+                    if settings.badgeSetting == .enabled {
                         debugPrint("Schedule an badge notification")
-                    } else if settings.soundSetting == .enabled {
+                    }
+                    if settings.soundSetting == .enabled {
                         debugPrint("Schedule an sound notification")
-                    } else {
-                        debugPrint("Schedule an unknown notification")
                     }
                 }
                 
