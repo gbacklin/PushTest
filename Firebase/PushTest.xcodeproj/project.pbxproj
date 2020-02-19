@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4E047F1723FB3954002ACDA3 /* AppDelegate+PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E047F1423FB3954002ACDA3 /* AppDelegate+PushNotificationHandler.swift */; };
 		4E047F1823FB3954002ACDA3 /* AppDelegate+PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E047F1523FB3954002ACDA3 /* AppDelegate+PushNotification.swift */; };
-		4E047F1923FB3954002ACDA3 /* AppDelegate+FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E047F1623FB3954002ACDA3 /* AppDelegate+FirebaseMessaging.swift */; };
 		4E0A02F0235A117E0013B763 /* BadgeNumberPushNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0A02E9235A117E0013B763 /* BadgeNumberPushNotificationModel.swift */; };
 		4E0A02F1235A117E0013B763 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0A02EB235A117E0013B763 /* ViewController.swift */; };
 		4E0A02F2235A117E0013B763 /* BadgeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0A02ED235A117E0013B763 /* BadgeImageView.swift */; };
@@ -35,12 +34,12 @@
 		4EC008C52358F5A400165F19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C42358F5A400165F19 /* Assets.xcassets */; };
 		4EC008C82358F5A400165F19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC008C62358F5A400165F19 /* LaunchScreen.storyboard */; };
 		4EFEA0DB23FD86C10043C0AB /* APNSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFEA0DA23FD86C10043C0AB /* APNSViewController.swift */; };
+		4EFEA0DE23FDD23C0043C0AB /* AppDelegate+FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFEA0DD23FDD23C0043C0AB /* AppDelegate+FirebaseMessaging.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4E047F1423FB3954002ACDA3 /* AppDelegate+PushNotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+PushNotificationHandler.swift"; sourceTree = "<group>"; };
 		4E047F1523FB3954002ACDA3 /* AppDelegate+PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+PushNotification.swift"; sourceTree = "<group>"; };
-		4E047F1623FB3954002ACDA3 /* AppDelegate+FirebaseMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+FirebaseMessaging.swift"; sourceTree = "<group>"; };
 		4E0A02E9235A117E0013B763 /* BadgeNumberPushNotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNumberPushNotificationModel.swift; sourceTree = "<group>"; };
 		4E0A02EB235A117E0013B763 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4E0A02ED235A117E0013B763 /* BadgeImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeImageView.swift; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 		4EC008C92358F5A400165F19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EC008CF2358FF0E00165F19 /* PushTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushTest.entitlements; sourceTree = "<group>"; };
 		4EFEA0DA23FD86C10043C0AB /* APNSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APNSViewController.swift; sourceTree = "<group>"; };
+		4EFEA0DD23FDD23C0043C0AB /* AppDelegate+FirebaseMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+FirebaseMessaging.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +100,9 @@
 		4E047F1323FB3954002ACDA3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4E047F1623FB3954002ACDA3 /* AppDelegate+FirebaseMessaging.swift */,
 				4E047F1523FB3954002ACDA3 /* AppDelegate+PushNotification.swift */,
 				4E047F1423FB3954002ACDA3 /* AppDelegate+PushNotificationHandler.swift */,
+				4EFEA0DC23FDD23C0043C0AB /* Firebase */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +233,14 @@
 			path = PushTest;
 			sourceTree = "<group>";
 		};
+		4EFEA0DC23FDD23C0043C0AB /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				4EFEA0DD23FDD23C0043C0AB /* AppDelegate+FirebaseMessaging.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -336,8 +344,8 @@
 				4E0A02F1235A117E0013B763 /* ViewController.swift in Sources */,
 				4E0A02F3235A117E0013B763 /* Network.swift in Sources */,
 				4E0A02F0235A117E0013B763 /* BadgeNumberPushNotificationModel.swift in Sources */,
-				4E047F1923FB3954002ACDA3 /* AppDelegate+FirebaseMessaging.swift in Sources */,
 				4E0A02F2235A117E0013B763 /* BadgeImageView.swift in Sources */,
+				4EFEA0DE23FDD23C0043C0AB /* AppDelegate+FirebaseMessaging.swift in Sources */,
 				4E047F1823FB3954002ACDA3 /* AppDelegate+PushNotification.swift in Sources */,
 				4EFEA0DB23FD86C10043C0AB /* APNSViewController.swift in Sources */,
 				4EC008BE2358F5A100165F19 /* AppDelegate.swift in Sources */,
