@@ -40,6 +40,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func sendTextToServer(_ sender: Any) {
+        badgeCountTextField.resignFirstResponder()
         DispatchQueue.global(qos: .background).async {
             print("This is run on the background queue")
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 3.0), execute: {
@@ -130,4 +131,12 @@ class ViewController: UIViewController {
         syncBadgeNumber(UIApplication.shared.applicationIconBadgeNumber)
     }
 
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        sendTextToServer(textField)
+        textField.resignFirstResponder()
+        return true
+    }
 }
