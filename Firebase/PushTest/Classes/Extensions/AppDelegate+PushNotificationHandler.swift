@@ -82,7 +82,12 @@ extension AppDelegate {
         UIApplication.shared.applicationIconBadgeNumber = number
     }
 
-    func didReceiveRemoteNotification(apsInfo: [String : AnyObject], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func didReceiveRemoteNotification(userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        guard let apsInfo = userInfo["aps"] as? [String: AnyObject] else {
+            completionHandler(.failed)
+            return
+        }
+        debugPrint("didReceiveRemoteNotification apsInfo: \(apsInfo)")
         if apsInfo["content-available"] as? Int == 1 {
             let type: String = apsInfo["type"] as! String
             let badgeCount: String = apsInfo["count"] as! String
@@ -99,7 +104,7 @@ extension AppDelegate {
         }
     }
     
-    func handleResponse(response: UNNotificationResponse) {
+    func handleDidReceiveResponseResponse(_ response: UNNotificationResponse) {
         let userInfo = response.notification.request.content.userInfo
         let categoryIdentifier = response.notification.request.content.categoryIdentifier
 
@@ -116,5 +121,9 @@ extension AppDelegate {
             print("response.actionIdentifier: \(response.actionIdentifier)")
             break
         }
+    }
+    
+    func handleWillPresentNotification(_ data: Data) {
+        updateBadgeCount(data)
     }
 }

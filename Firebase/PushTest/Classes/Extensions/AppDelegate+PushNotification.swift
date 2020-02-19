@@ -39,7 +39,6 @@ extension AppDelegate {
                         debugPrint("Schedule an sound notification")
                     }
                 }
-                
                 DispatchQueue.main.async {
                     debugPrint("Registering for Remote Notifications...")
                     application.registerForRemoteNotifications()
@@ -62,13 +61,7 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         debugPrint("didReceiveRemoteNotification userInfo: \(userInfo)")
-
-        guard let aps = userInfo["aps"] as? [String: AnyObject] else {
-            completionHandler(.failed)
-            return
-        }
-        debugPrint("didReceiveRemoteNotification aps: \(aps)")
-        didReceiveRemoteNotification(apsInfo: aps, fetchCompletionHandler: completionHandler)
+        didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
     
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], withResponseInfo responseInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
@@ -83,22 +76,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         debugPrint("didReceive response: \(response)")
-        handleResponse(response: response)
+        handleDidReceiveResponseResponse(response)
         completionHandler()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         debugPrint("willPresent notification: \(notification)")
-
         // Update the app interface directly.
         do {
             let data = try JSONSerialization.data(withJSONObject: notification.request.content.userInfo, options: [])
-            updateBadgeCount(data)
+            handleWillPresentNotification(data)
+            // Play a sound.
+            completionHandler(UNNotificationPresentationOptions.sound)
         } catch {
             debugPrint("JSONSerialization error received: \(error.localizedDescription)")
         }
-        // Play a sound.
-        completionHandler(UNNotificationPresentationOptions.sound)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
