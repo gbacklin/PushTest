@@ -130,8 +130,8 @@
 		4E0A02EA235A117E0013B763 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				4E0A02EB235A117E0013B763 /* ViewController.swift */,
 				4EFEA0DA23FD86C10043C0AB /* APNSViewController.swift */,
+				4E0A02EB235A117E0013B763 /* ViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
