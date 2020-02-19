@@ -34,7 +34,6 @@ extension AppDelegate {
                 // This is as a result from Firebase notifications with the
                 // key being count and value a value
                 DispatchQueue.main.async { [weak self] in
-                    self!.updateBadgeNumber(Int(count)!)
                     if let redirect: String = dict!["redirect"] as? String {
                         // This is as a result from Firebase notifications with the
                         // key being count and value a value
@@ -43,12 +42,16 @@ extension AppDelegate {
                             self?.window = UIWindow(frame: UIScreen.main.bounds)
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let controller: APNSViewController = storyboard.instantiateViewController(withIdentifier: "APNSViewController") as? APNSViewController {
+                                let navigationController: UINavigationController = storyboard.instantiateViewController(withIdentifier: "APNSNavigationController") as! UINavigationController
                                 controller.dict = dict
-                                self?.window?.rootViewController = controller
+                                navigationController.viewControllers = [controller]
+                                self?.window?.rootViewController = navigationController
                                 self?.window?.makeKeyAndVisible()
                                 NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
                             }
                         }
+                    } else {
+                        self!.updateBadgeNumber(Int(count)!)
                     }
                     NotificationCenter.default.post(name: Notifications.PushNotificationPayloadReceived, object: dict!, userInfo: nil)
                 }
