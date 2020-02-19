@@ -13,8 +13,6 @@ struct Notifications {
     static let PushNotificationPayloadReceived = NSNotification.Name(rawValue: "PushNotificationPayloadReceived")
 }
 
-// MARK: - Push Notifications
-
 extension AppDelegate {
     
     // MARK: - APNS Utility
@@ -53,6 +51,8 @@ extension AppDelegate {
         }
     }
 
+    // MARK: - APNS Delegate methods
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
@@ -101,6 +101,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 }
+//
 //    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 //        debugPrint("didReceive response: \(response)")
 //
