@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>569496894373-qb6ls6cag78ai7g6293tei9rp2pm42is.apps.googleusercontent.com</string>
+	<string>423491845538-af18nhd6k07npfsvpvvvbaofdtk8aanj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.569496894373-qb6ls6cag78ai7g6293tei9rp2pm42is</string>
+	<string>com.googleusercontent.apps.423491845538-af18nhd6k07npfsvpvvvbaofdtk8aanj</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBybS1vpFqOFQOArin56Wi-Y9P0wnKhgjg</string>
+	<string>AIzaSyCUlmIKulJLm86DHJEjruStfJk55oQj_oU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>569496894373</string>
+	<string>423491845538</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.marizack.PushTest</string>
 	<key>PROJECT_ID</key>
-	<string>pushtest-apns</string>
+	<string>pushtest-40d2f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>pushtest-apns.appspot.com</string>
+	<string>pushtest-40d2f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:569496894373:ios:071499e5e225a5b56a864c</string>
-	<key>DATABASE_URL</key>
-	<string>https://pushtest-apns.firebaseio.com</string>
+	<string>1:423491845538:ios:66dfc82a8c4a5756c006fb</string>
 </dict>
 </plist>
